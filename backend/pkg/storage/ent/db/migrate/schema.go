@@ -130,7 +130,9 @@ var (
 		{Name: "job_id", Type: field.TypeString, SchemaType: map[string]string{"postgres": "text"}},
 		{Name: "name", Type: field.TypeString, Size: 2147483647, SchemaType: map[string]string{"postgres": "text"}},
 		{Name: "status", Type: field.TypeString, Size: 2147483647, SchemaType: map[string]string{"postgres": "text"}},
+		{Name: "error_message", Type: field.TypeString, Nullable: true, Size: 2147483647, SchemaType: map[string]string{"postgres": "text"}},
 		{Name: "time", Type: field.TypeFloat64, SchemaType: map[string]string{"postgres": "text"}},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, SchemaType: map[string]string{"postgres": "timestamptz"}},
 		{Name: "repository_prow_suites", Type: field.TypeString, Nullable: true, Size: 25},
 	}
 	// ProwSuitesTable holds the schema information for the "prow_suites" table.
@@ -141,7 +143,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "prow_suites_repositories_prow_suites",
-				Columns:    []*schema.Column{ProwSuitesColumns[5]},
+				Columns:    []*schema.Column{ProwSuitesColumns[7]},
 				RefColumns: []*schema.Column{RepositoriesColumns[0]},
 				OnDelete:   schema.Cascade,
 			},

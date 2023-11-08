@@ -13,8 +13,12 @@ const (
 	FieldName = "name"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
+	// FieldErrorMessage holds the string denoting the error_message field in the database.
+	FieldErrorMessage = "error_message"
 	// FieldTime holds the string denoting the time field in the database.
 	FieldTime = "time"
+	// FieldCreatedAt holds the string denoting the created_at field in the database.
+	FieldCreatedAt = "created_at"
 	// EdgeProwSuites holds the string denoting the prow_suites edge name in mutations.
 	EdgeProwSuites = "prow_suites"
 	// Table holds the table name of the prowsuites in the database.
@@ -34,7 +38,9 @@ var Columns = []string{
 	FieldJobID,
 	FieldName,
 	FieldStatus,
+	FieldErrorMessage,
 	FieldTime,
+	FieldCreatedAt,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the "prow_suites"

@@ -14,6 +14,8 @@ func (d *Database) CreateProwJobSuites(suites prowV1Alpha1.JobSuites, repo_id st
 		SetName(suites.TestCaseName).
 		SetStatus(suites.TestCaseStatus).
 		SetTime(suites.TestTiming).
+		SetErrorMessage(suites.ErrorMessage).
+		SetCreatedAt(suites.CreatedAt).
 		Save(context.TODO())
 	if err != nil {
 		return convertDBError("create prow: %w", err)

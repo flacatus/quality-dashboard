@@ -9,6 +9,7 @@ import (
 	failureV1Alpha1 "github.com/redhat-appstudio/quality-studio/api/apis/failure/v1alpha1"
 	repoV1Alpha1 "github.com/redhat-appstudio/quality-studio/api/apis/github/v1alpha1"
 	jiraV1Alpha1 "github.com/redhat-appstudio/quality-studio/api/apis/jira/v1alpha1"
+	"github.com/redhat-appstudio/quality-studio/api/apis/prow/v1alpha1"
 	prowV1Alpha1 "github.com/redhat-appstudio/quality-studio/api/apis/prow/v1alpha1"
 	"github.com/redhat-appstudio/quality-studio/pkg/storage/ent/db"
 )
@@ -65,6 +66,7 @@ type Storage interface {
 	CreateFailure(f failureV1Alpha1.Failure, team_id uuid.UUID) error
 	UpdateBuildLogErrors(jobID, buildErrorLogs string) error
 	GetAllProwJobs(startDate, endDate string) ([]*db.ProwJobs, error)
+	GetSuitesFailureFrequency(startDate, endDate string) ([]v1alpha1.SuitesFailureFrequency, error)
 
 	// Delete
 	DeleteRepository(repositoryName, gitOrganizationName string) error

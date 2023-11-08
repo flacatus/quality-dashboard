@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -46,6 +47,26 @@ func (psu *ProwSuitesUpdate) SetStatus(s string) *ProwSuitesUpdate {
 	return psu
 }
 
+// SetErrorMessage sets the "error_message" field.
+func (psu *ProwSuitesUpdate) SetErrorMessage(s string) *ProwSuitesUpdate {
+	psu.mutation.SetErrorMessage(s)
+	return psu
+}
+
+// SetNillableErrorMessage sets the "error_message" field if the given value is not nil.
+func (psu *ProwSuitesUpdate) SetNillableErrorMessage(s *string) *ProwSuitesUpdate {
+	if s != nil {
+		psu.SetErrorMessage(*s)
+	}
+	return psu
+}
+
+// ClearErrorMessage clears the value of the "error_message" field.
+func (psu *ProwSuitesUpdate) ClearErrorMessage() *ProwSuitesUpdate {
+	psu.mutation.ClearErrorMessage()
+	return psu
+}
+
 // SetTime sets the "time" field.
 func (psu *ProwSuitesUpdate) SetTime(f float64) *ProwSuitesUpdate {
 	psu.mutation.ResetTime()
@@ -56,6 +77,26 @@ func (psu *ProwSuitesUpdate) SetTime(f float64) *ProwSuitesUpdate {
 // AddTime adds f to the "time" field.
 func (psu *ProwSuitesUpdate) AddTime(f float64) *ProwSuitesUpdate {
 	psu.mutation.AddTime(f)
+	return psu
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (psu *ProwSuitesUpdate) SetCreatedAt(t time.Time) *ProwSuitesUpdate {
+	psu.mutation.SetCreatedAt(t)
+	return psu
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (psu *ProwSuitesUpdate) SetNillableCreatedAt(t *time.Time) *ProwSuitesUpdate {
+	if t != nil {
+		psu.SetCreatedAt(*t)
+	}
+	return psu
+}
+
+// ClearCreatedAt clears the value of the "created_at" field.
+func (psu *ProwSuitesUpdate) ClearCreatedAt() *ProwSuitesUpdate {
+	psu.mutation.ClearCreatedAt()
 	return psu
 }
 
@@ -143,11 +184,23 @@ func (psu *ProwSuitesUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := psu.mutation.Status(); ok {
 		_spec.SetField(prowsuites.FieldStatus, field.TypeString, value)
 	}
+	if value, ok := psu.mutation.ErrorMessage(); ok {
+		_spec.SetField(prowsuites.FieldErrorMessage, field.TypeString, value)
+	}
+	if psu.mutation.ErrorMessageCleared() {
+		_spec.ClearField(prowsuites.FieldErrorMessage, field.TypeString)
+	}
 	if value, ok := psu.mutation.Time(); ok {
 		_spec.SetField(prowsuites.FieldTime, field.TypeFloat64, value)
 	}
 	if value, ok := psu.mutation.AddedTime(); ok {
 		_spec.AddField(prowsuites.FieldTime, field.TypeFloat64, value)
+	}
+	if value, ok := psu.mutation.CreatedAt(); ok {
+		_spec.SetField(prowsuites.FieldCreatedAt, field.TypeTime, value)
+	}
+	if psu.mutation.CreatedAtCleared() {
+		_spec.ClearField(prowsuites.FieldCreatedAt, field.TypeTime)
 	}
 	if psu.mutation.ProwSuitesCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -222,6 +275,26 @@ func (psuo *ProwSuitesUpdateOne) SetStatus(s string) *ProwSuitesUpdateOne {
 	return psuo
 }
 
+// SetErrorMessage sets the "error_message" field.
+func (psuo *ProwSuitesUpdateOne) SetErrorMessage(s string) *ProwSuitesUpdateOne {
+	psuo.mutation.SetErrorMessage(s)
+	return psuo
+}
+
+// SetNillableErrorMessage sets the "error_message" field if the given value is not nil.
+func (psuo *ProwSuitesUpdateOne) SetNillableErrorMessage(s *string) *ProwSuitesUpdateOne {
+	if s != nil {
+		psuo.SetErrorMessage(*s)
+	}
+	return psuo
+}
+
+// ClearErrorMessage clears the value of the "error_message" field.
+func (psuo *ProwSuitesUpdateOne) ClearErrorMessage() *ProwSuitesUpdateOne {
+	psuo.mutation.ClearErrorMessage()
+	return psuo
+}
+
 // SetTime sets the "time" field.
 func (psuo *ProwSuitesUpdateOne) SetTime(f float64) *ProwSuitesUpdateOne {
 	psuo.mutation.ResetTime()
@@ -232,6 +305,26 @@ func (psuo *ProwSuitesUpdateOne) SetTime(f float64) *ProwSuitesUpdateOne {
 // AddTime adds f to the "time" field.
 func (psuo *ProwSuitesUpdateOne) AddTime(f float64) *ProwSuitesUpdateOne {
 	psuo.mutation.AddTime(f)
+	return psuo
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (psuo *ProwSuitesUpdateOne) SetCreatedAt(t time.Time) *ProwSuitesUpdateOne {
+	psuo.mutation.SetCreatedAt(t)
+	return psuo
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (psuo *ProwSuitesUpdateOne) SetNillableCreatedAt(t *time.Time) *ProwSuitesUpdateOne {
+	if t != nil {
+		psuo.SetCreatedAt(*t)
+	}
+	return psuo
+}
+
+// ClearCreatedAt clears the value of the "created_at" field.
+func (psuo *ProwSuitesUpdateOne) ClearCreatedAt() *ProwSuitesUpdateOne {
+	psuo.mutation.ClearCreatedAt()
 	return psuo
 }
 
@@ -343,11 +436,23 @@ func (psuo *ProwSuitesUpdateOne) sqlSave(ctx context.Context) (_node *ProwSuites
 	if value, ok := psuo.mutation.Status(); ok {
 		_spec.SetField(prowsuites.FieldStatus, field.TypeString, value)
 	}
+	if value, ok := psuo.mutation.ErrorMessage(); ok {
+		_spec.SetField(prowsuites.FieldErrorMessage, field.TypeString, value)
+	}
+	if psuo.mutation.ErrorMessageCleared() {
+		_spec.ClearField(prowsuites.FieldErrorMessage, field.TypeString)
+	}
 	if value, ok := psuo.mutation.Time(); ok {
 		_spec.SetField(prowsuites.FieldTime, field.TypeFloat64, value)
 	}
 	if value, ok := psuo.mutation.AddedTime(); ok {
 		_spec.AddField(prowsuites.FieldTime, field.TypeFloat64, value)
+	}
+	if value, ok := psuo.mutation.CreatedAt(); ok {
+		_spec.SetField(prowsuites.FieldCreatedAt, field.TypeTime, value)
+	}
+	if psuo.mutation.CreatedAtCleared() {
+		_spec.ClearField(prowsuites.FieldCreatedAt, field.TypeTime)
 	}
 	if psuo.mutation.ProwSuitesCleared() {
 		edge := &sqlgraph.EdgeSpec{

@@ -20,8 +20,16 @@ func (ProwSuites) Fields() []ent.Field {
 			SchemaType(textSchema),
 		field.Text("status").
 			SchemaType(textSchema),
+		field.Text("error_message").
+			Optional().
+			Nillable().
+			SchemaType(textSchema),
 		field.Float("time").
 			SchemaType(textSchema),
+		field.Time("created_at").
+			Optional().
+			Nillable().
+			SchemaType(timeSchema),
 	}
 }
 

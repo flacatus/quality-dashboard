@@ -124,7 +124,6 @@ func SaveProwJobsinDatabase(s storage.Storage, pj prow.ProwJob, ts prow.TestSuit
 	prowJob := prowV1Alpha1.Job{}
 	testSuiteSummary := getSuitesData(pj, ts)
 	buildErrorLogs := ""
-
 	if testSuiteSummary.E2EFailedMessages == "" && pj.Status.State == prow.FailureState {
 		buildErrorLogs = getBuildLogErrors(pj.Status.URL)
 	}
@@ -148,19 +147,23 @@ func SaveProwJobsinDatabase(s storage.Storage, pj prow.ProwJob, ts prow.TestSuit
 		return fmt.Errorf("failed to save job to db %s", err)
 	}
 
-	if pj.Spec.Type == "periodic" {
-		for _, suite := range ts.Suites {
-			for _, testCase := range suite.TestCases {
-				if err := s.CreateProwJobSuites(prowV1Alpha1.JobSuites{
-					JobID:          pj.Status.BuildID,
-					TestCaseName:   testCase.Name,
-					TestCaseStatus: testCase.Status,
-					TestTiming:     testCase.Duration,
-					JobType:        pj.Spec.Type,
-				}, repositoryId); err != nil {
-					// nolint:all
-					fmt.Errorf("failed to save job to db %v", err)
-				}
+	for _, suite := range ts.Suites {
+		for _, testCase := range suite.TestCases {
+			jobSuite := prowV1Alpha1.JobSuites{
+				JobID:          pj.Status.BuildID,
+				TestCaseName:   testCase.Name,
+				TestCaseStatus: testCase.Status,
+				TestTiming:     testCase.Duration,
+				JobType:        pj.Spec.Type,
+				CreatedAt:      prowJob.CreatedAt,
+			}
+			if testCase.Status == "failed" {
+				jobSuite.ErrorMessage = testCase.FailureOutput.Message
+			}
+
+			if err := s.CreateProwJobSuites(jobSuite, repositoryId); err != nil {
+				// nolint:all
+				fmt.Errorf("failed to save job to db %v", err)
 			}
 		}
 	}
